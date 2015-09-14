@@ -9377,7 +9377,7 @@ module.exports = function setupParser(Processing, options) {
       }
     }
     if (sketch.options.includeTable) {
-	acode += "\n\n\
+	aCode += "\n\n\
 class TableRow {\n\
     ArrayList header;\n\
     ArrayList data;\n\
