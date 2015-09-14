@@ -639,7 +639,8 @@ module.exports = function finalizeProcessing(Processing, options) {
     this.attachFunction = attachFunction;
     this.options = {
       pauseOnBlur: false,
-      globalKeyEvents: false
+      globalKeyEvents: false,
+      includeTable: false
     };
 
     /* Optional Sketch event hooks:
@@ -9365,6 +9366,8 @@ module.exports = function setupParser(Processing, options) {
             sketch.options.pauseOnBlur = value === "true";
           } else if (key === "globalKeyEvents") {
             sketch.options.globalKeyEvents = value === "true";
+          } else if (key === "includeTable") {
+            sketch.options.includeTable = value === "true";
           } else if (key.substring(0, 6) === "param-") {
             sketch.params[key.substring(6)] = value;
           } else {
@@ -9373,12 +9376,8 @@ module.exports = function setupParser(Processing, options) {
         }
       }
     }
-    return aCode;
-  }
-
-  // Parse/compiles Processing (Java-like) syntax to JavaScript syntax
-  Processing.compile = function(pdeCode) {
-      pdeCode = pdeCode.replace("import processing.table.*;", "\
+    if (sketch.options.includeTable) {
+	acode += "\n\n\
 class TableRow {\n\
     ArrayList header;\n\
     ArrayList data;\n\
@@ -9389,33 +9388,32 @@ class TableRow {\n\
     TableRow(String text, String header) {\n\
         this.data = this.parse(text);\n\
         this.header = this.parse(header); \n\
-        document._header = header;\n\
     }\n\
     String getString(String column) {\n\
         int col = this.getColumn(column);\n\
-        return this.data.get(col);\n\
+        return this.data.get(col).toString();\n\
     }\n\
     float getFloat(String column) {\n\
         int col = this.getColumn(column);\n\
-        return float(this.data.get(col));\n\
+        return (Float)this.data.get(col);\n\
     }\n\
     int getInt(String column) {\n\
         int col = this.getColumn(column);\n\
-        return int(this.data.get(col));\n\
+        return (Integer)this.data.get(col);\n\
     }\n\
     int getColumn(String column) {\n\
         for (int i = 0; i < this.data.size(); i++) {\n\
             if (this.header.get(i) == column)\n\
                 return i;\n\
         }\n\
-        return null;\n\
+        return -1;\n\
     }\n\
     \n\
     ArrayList parse(String text) {\n\
         ArrayList retval = new ArrayList();\n\
         String current = \"\";\n\
         String mode = \"row\";\n\
-        for (int i = 0; i < text.length; i++) {\n\
+        for (int i = 0; i < text.length(); i++) {\n\
             if (mode == \"row\") {\n\
                 if (text.substring(i, i + 1) == \",\") {\n\
                     retval.add(current.trim());\n\
@@ -9442,7 +9440,7 @@ class TableRow {\n\
 \n\
 class Table {\n\
     int row_count = 0;\n\
-    ArrayList row_list;\n\
+    ArrayList<TableRow> row_list;\n\
     \n\
     Table(String filename, String option) {\n\
         String lines[] = loadStrings(filename);\n\
@@ -9462,19 +9460,28 @@ class Table {\n\
         }\n\
     }\n\
     \n\
-    ArrayList<TableRows> rows() {\n\
+    ArrayList rows() {\n\
         return row_list;\n\
     }\n\
     \n\
     int getRowCount() {\n\
         return row_count;\n\
     }\n\
+    \n\
+    TableRow getRow(int pos) {\n\
+        return row_list.get(pos);\n\
+    }\n\
 }\n\
 \n\
 Table loadTable(String filename, String option) {\n\
     return new Table(filename, option);\n\
-}\n\
-");
+}\n\n";
+      }
+      return aCode;
+  }
+
+  // Parse/compiles Processing (Java-like) syntax to JavaScript syntax
+  Processing.compile = function(pdeCode) {
     var sketch = new Processing.Sketch();
     var code = preprocessCode(pdeCode, sketch);
     var compiledPde = parseProcessing(code);
