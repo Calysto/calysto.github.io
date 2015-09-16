@@ -63,14 +63,14 @@ Blockly.Java['procedures_defreturn'] = function(block) {
   var args = [];
   for (var x = 0; x < block.arguments_.length; x++) {
     var type = Blockly.Java.GetVariableType(funcPrefix + '.' +
-                                            block.arguments_[x]['name']);
+                                            block.arguments_[x]);
     args[x] = type + ' ' +
-              Blockly.Java.variableDB_.getName(block.arguments_[x]['name'],
+              Blockly.Java.variableDB_.getName(block.arguments_[x],
                                                Blockly.Variables.NAME_TYPE);
   }
 
-  var code = 'public ' + retType + ' ' +
-              funcName + '(' + args.join(', ') + '){\n' +
+  var code = retType + ' ' +
+              funcName + '(' + args.join(', ') + ') {\n' +
              branch + returnValue + "}";
   code = Blockly.Java.scrub_(block, code);
   Blockly.Java.definitions_[funcName] = code;
@@ -91,7 +91,7 @@ Blockly.Java['procedures_callreturn'] = function(block) {
     args[x] = Blockly.Java.valueToCode(block, 'ARG' + x,
         Blockly.Java.ORDER_NONE) || 'null';
   }
-  var code = 'this.' + funcName + '(' + args.join(', ') + ')';
+  var code = funcName + '(' + args.join(', ') + ')';
   return [code, Blockly.Java.ORDER_FUNCTION_CALL];
 };
 
@@ -104,7 +104,7 @@ Blockly.Java['procedures_callnoreturn'] = function(block) {
     args[x] = Blockly.Java.valueToCode(block, 'ARG' + x,
         Blockly.Java.ORDER_NONE) || 'null';
   }
-  var code = 'this.' + funcName + '(' + args.join(', ') + ');\n';
+  var code = funcName + '(' + args.join(', ') + ');\n';
   return code;
 };
 

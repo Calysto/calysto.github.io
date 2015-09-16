@@ -268,14 +268,14 @@ Blockly.Java['text_print'] = function(block) {
   // Print statement.
   var argument0 = Blockly.Java.valueToCode(block, 'TEXT',
       Blockly.Java.ORDER_NONE) || '""';
-  return 'System.out.println(' + argument0 + '.toString());\n';
+  return 'println(' + argument0 + ');\n';
 };
 
 Blockly.Java['text_printf'] = function(block) {
   // Print statement.
   var argument0 = Blockly.Java.valueToCode(block, 'TEXT',
       Blockly.Java.ORDER_NONE) || '""';
-  return 'System.out.println(' + argument0 + '.toString());\n';
+  return 'println(' + argument0 + ');\n';
 };
 
 Blockly.Java['text_printf'] = function(block) {

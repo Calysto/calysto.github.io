@@ -65,7 +65,7 @@ Blockly.Java['variables_set'] = function(block) {
   var code = varName;
   if(Blockly.Java.GetVariableType(this.procedurePrefix_+
       block.getFieldValue('VAR')) === 'Var') {
-    code += '.setObject(' + argument0 + ');\n';
+    code += ' = ' + argument0 + ';\n';
   } else {
     code += ' = ' + argument0 + ';\n';
   }

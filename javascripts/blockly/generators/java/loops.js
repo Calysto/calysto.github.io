@@ -51,10 +51,9 @@ Blockly.Java['controls_repeat_ext'] = function(block) {
     code += 'int ' + endVar + ' = int(' + repeats + ');\n';
   }
   code += 'for (int ' + loopVar + ' = 0; '+
-                        loopVar +' < ' + repeats + ';'+
+                        loopVar +' < ' + repeats + '; ' +
                         loopVar + '++) {\n' +
-          Blockly.Java.INDENT + branch +
-          '} // end for\n';
+          Blockly.Java.INDENT + branch + '\n' + '}\n';
   return code;
 };
 
@@ -83,7 +82,7 @@ Blockly.Java['controls_whileUntil'] = function(block) {
   }
   return 'while (' + argument0 + ') {\n' +
            branch +
-         '} // end while\n';
+         '}\n';
 };
 
 Blockly.Java['controls_for'] = function(block) {
@@ -179,7 +178,7 @@ Blockly.Java['controls_for'] = function(block) {
   }
   code += ' {\n' +
               branch +
-           '} // end for\n';
+           '}\n';
   return code;
 };
 
@@ -207,7 +206,7 @@ Blockly.Java['controls_forEach'] = function(block) {
   var code = 'for (Iterator ' + loopVar + ' = ' +
                   argument0 + '.iterator(); ' + loopVar + '.hasNext();) {\n'+
              Blockly.Java.INDENT + setvar0 + ';\n'
-              + branch + '} // end for\n';
+              + branch + '}\n';
   return code;
 };
 
