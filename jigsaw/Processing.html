@@ -261,11 +261,9 @@
             this.appendValueInput("high")
                 .appendField("high")
                 .setCheck("Number");
-            this.setInputsInline(true);
-            this.setPreviousStatement(true, null);
-            this.setNextStatement(true, null);
+            this.setOutput(true, "Number");
             this.setColour(20);
-            this.setTooltip('A random value between 0 and high');
+            this.setTooltip('Produces a random value between 0 and high');
             this.setHelpUrl('http://processingjs.org/reference/random_/');
           }
         };        
@@ -484,7 +482,7 @@
 	// random
         Blockly.Java['processing_random'] = function(block) {
           var value_high = Blockly.Java.valueToCode(block, 'high', Blockly.Java.ORDER_ATOMIC);
-          var code = 'stroke(' + value_high + ');\n';
+          var code = 'random(' + value_high + ');\n';
           return code;
         };
 
@@ -937,9 +935,9 @@
         <category name="Math">
             <category name="Random">
                 <block type="processing_random">
-                    <value name="blue">
+                    <value name="high">
                         <block type="math_number">
-                            <field name="NUM">1</field>
+                            <field name="NUM">0</field>
                         </block>
                     </value>
 		</block>
