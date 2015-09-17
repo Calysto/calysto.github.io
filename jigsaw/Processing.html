@@ -254,6 +254,108 @@
             this.setHelpUrl('http://processingjs.org/reference/mouseY/');
           }
         };        
+        Blockly.Blocks['processing_random'] = {
+          init: function() {
+            this.appendDummyInput()
+                .appendField("random   with:");
+            this.appendValueInput("high")
+                .appendField("high")
+                .setCheck("Number");
+            this.setInputsInline(true);
+            this.setPreviousStatement(true, null);
+            this.setNextStatement(true, null);
+            this.setColour(20);
+            this.setTooltip('A random value between 0 and high');
+            this.setHelpUrl('http://processingjs.org/reference/random_/');
+          }
+        };        
+        Blockly.Blocks['processing_fill'] = {
+          init: function() {
+            this.appendDummyInput()
+                .appendField("fill   with:");
+            this.appendValueInput("red")
+                .appendField("red")
+                .setCheck("Number");
+            this.appendValueInput("green")
+                .appendField("green")
+                .setCheck("Number");
+            this.appendValueInput("blue")
+                .appendField("blue")
+                .setCheck("Number");
+            this.setInputsInline(true);
+            this.setPreviousStatement(true, null);
+            this.setNextStatement(true, null);
+            this.setColour(20);
+            this.setTooltip('Set the fill color for the following shapes');
+            this.setHelpUrl('http://processingjs.org/reference/fill_/');
+          }
+        };        
+        Blockly.Blocks['processing_background'] = {
+          init: function() {
+            this.appendDummyInput()
+                .appendField("background   with:");
+            this.appendValueInput("red")
+                .appendField("red")
+                .setCheck("Number");
+            this.appendValueInput("green")
+                .appendField("green")
+                .setCheck("Number");
+            this.appendValueInput("blue")
+                .appendField("blue")
+                .setCheck("Number");
+            this.setInputsInline(true);
+            this.setPreviousStatement(true, null);
+            this.setNextStatement(true, null);
+            this.setColour(20);
+            this.setTooltip('Set the background color');
+            this.setHelpUrl('http://processingjs.org/reference/background_/');
+          }
+        };        
+        Blockly.Blocks['processing_stroke'] = {
+          init: function() {
+            this.appendDummyInput()
+                .appendField("stroke   with:");
+            this.appendValueInput("red")
+                .appendField("red")
+                .setCheck("Number");
+            this.appendValueInput("green")
+                .appendField("green")
+                .setCheck("Number");
+            this.appendValueInput("blue")
+                .appendField("blue")
+                .setCheck("Number");
+            this.setInputsInline(true);
+            this.setPreviousStatement(true, null);
+            this.setNextStatement(true, null);
+            this.setColour(20);
+            this.setTooltip('Set the outline color for the following shapes');
+            this.setHelpUrl('http://processingjs.org/reference/stroke_/');
+          }
+        };        
+        Blockly.Blocks['processing_nofill'] = {
+          init: function() {
+            this.appendDummyInput()
+                .appendField("noFill");
+            this.setInputsInline(true);
+            this.setPreviousStatement(true, null);
+            this.setNextStatement(true, null);
+            this.setColour(20);
+            this.setTooltip('Turn off fill coloring for the following shapes');
+            this.setHelpUrl('http://processingjs.org/reference/nofill_/');
+          }
+        };        
+        Blockly.Blocks['processing_nostroke'] = {
+          init: function() {
+            this.appendDummyInput()
+                .appendField("noStroke");
+            this.setInputsInline(true);
+            this.setPreviousStatement(true, null);
+            this.setNextStatement(true, null);
+            this.setColour(20);
+            this.setTooltip('Turn off outline coloring for the following shapes');
+            this.setHelpUrl('http://processingjs.org/reference/nostroke_/');
+          }
+        };        
         // Conversions:
         // Java:
         //arc()
@@ -349,6 +451,43 @@
           var code = 'mouseY';
           return [code, Blockly.Java.ORDER_ATOMIC];
         };        
+	// color, setting
+        Blockly.Java['processing_fill'] = function(block) {
+          var value_red = Blockly.Java.valueToCode(block, 'red', Blockly.Java.ORDER_ATOMIC);
+          var value_green = Blockly.Java.valueToCode(block, 'green', Blockly.Java.ORDER_ATOMIC);
+          var value_blue = Blockly.Java.valueToCode(block, 'blue', Blockly.Java.ORDER_ATOMIC);
+          var code = 'fill(' + value_red + ', ' + value_green + ', ' + value_blue + ');\n';
+          return code;
+        };
+        Blockly.Java['processing_background'] = function(block) {
+          var value_red = Blockly.Java.valueToCode(block, 'red', Blockly.Java.ORDER_ATOMIC);
+          var value_green = Blockly.Java.valueToCode(block, 'green', Blockly.Java.ORDER_ATOMIC);
+          var value_blue = Blockly.Java.valueToCode(block, 'blue', Blockly.Java.ORDER_ATOMIC);
+          var code = 'background(' + value_red + ', ' + value_green + ', ' + value_blue + ');\n';
+          return code;
+        };
+        Blockly.Java['processing_stroke'] = function(block) {
+          var value_red = Blockly.Java.valueToCode(block, 'red', Blockly.Java.ORDER_ATOMIC);
+          var value_green = Blockly.Java.valueToCode(block, 'green', Blockly.Java.ORDER_ATOMIC);
+          var value_blue = Blockly.Java.valueToCode(block, 'blue', Blockly.Java.ORDER_ATOMIC);
+          var code = 'stroke(' + value_red + ', ' + value_green + ', ' + value_blue + ');\n';
+          return code;
+        };
+        Blockly.Java['processing_nostroke'] = function(block) {
+          var code = 'noStroke();\n';
+          return code;
+        };
+        Blockly.Java['processing_nofill'] = function(block) {
+          var code = 'noFill();\n';
+          return code;
+        };
+	// random
+        Blockly.Java['processing_random'] = function(block) {
+          var value_high = Blockly.Java.valueToCode(block, 'high', Blockly.Java.ORDER_ATOMIC);
+          var code = 'stroke(' + value_high + ');\n';
+          return code;
+        };
+
     </script>
 </head>
 <body>
@@ -738,10 +877,72 @@
         </category>        
         <category name="Color">
             <category name="Setting">
+                <block type="processing_background">
+                    <value name="red">
+                        <block type="math_number">
+                            <field name="NUM">0</field>
+                        </block>
+                    </value>
+                    <value name="green">
+                        <block type="math_number">
+                            <field name="NUM">0</field>
+                        </block>
+                    </value>
+                    <value name="blue">
+                        <block type="math_number">
+                            <field name="NUM">0</field>
+                        </block>
+                    </value>
+		</block>
+                <block type="processing_fill">
+                    <value name="red">
+                        <block type="math_number">
+                            <field name="NUM">0</field>
+                        </block>
+                    </value>
+                    <value name="green">
+                        <block type="math_number">
+                            <field name="NUM">0</field>
+                        </block>
+                    </value>
+                    <value name="blue">
+                        <block type="math_number">
+                            <field name="NUM">0</field>
+                        </block>
+                    </value>
+		</block>
+                <block type="processing_nofill">
+		</block>
+                <block type="processing_nostroke">
+		</block>
+                <block type="processing_stroke">
+                    <value name="red">
+                        <block type="math_number">
+                            <field name="NUM">0</field>
+                        </block>
+                    </value>
+                    <value name="green">
+                        <block type="math_number">
+                            <field name="NUM">0</field>
+                        </block>
+                    </value>
+                    <value name="blue">
+                        <block type="math_number">
+                            <field name="NUM">0</field>
+                        </block>
+                    </value>
+		</block>
             </category>
         </category>
         <category name="Math">
             <category name="Random">
+                <block type="processing_random">
+                    <value name="blue">
+                        <block type="math_number">
+                            <field name="NUM">1</field>
+                        </block>
+                    </value>
+		</block>
             </category>
         </category>
     </category>
