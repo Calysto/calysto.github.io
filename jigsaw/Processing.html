@@ -483,8 +483,8 @@
 	// random
         Blockly.Java['processing_random'] = function(block) {
           var value_high = Blockly.Java.valueToCode(block, 'high', Blockly.Java.ORDER_ATOMIC);
-          var code = 'random(' + value_high + ');\n';
-          return code;
+          var code = 'random(' + value_high + ')';
+          return [code, Blockly.Java.ORDER_ATOMIC];
         };
 
     </script>
