@@ -434,10 +434,13 @@
           return xhttp.responseXML;
       }
 
+      console.log("getting workspace...")
       workspace_filename = getParameterByName("workspace");
       var xml = loadXMLDoc(workspace_filename);
+      window.parent.xml = xml;
 
       if (xml != null) {
+          console.log("loading dom to workspace...")
           Blockly.Xml.domToWorkspace(workspace, xml);
       }
 
@@ -523,6 +526,7 @@
           xml.style = "display: none";
           xml.id = "workspace";
           var xml_text = Blockly.Xml.domToText(xml)
+          console.log("save: " + '%%file ' + workspace_filename + '\n' + xml_text);
           window.parent.IPython.notebook.kernel.execute('%%file ' + workspace_filename + '\n' + xml_text);
       }
   </script>
