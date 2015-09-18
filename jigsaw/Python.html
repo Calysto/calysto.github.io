@@ -412,17 +412,6 @@
       window.parent.Blockly = Blockly;
       window.parent.xml = document.getElementById("toolbox");
 
-      function getParameterByName(name) {
-          console.log("getParameterByName: " + name);
-          name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-          var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-                                 results = regex.exec(location.search);
-          console.log("location.search: " + location.search);
-          console.log("document.location.search: " + document.location.search);
-          console.log(results);
-          return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-      }
-
     var workspace = Blockly.inject('blocklyDiv',
         {media: 'https://calysto.github.io/javascripts/blockly/media/',
          toolbox: document.getElementById('toolbox'),
@@ -439,7 +428,7 @@
       }
 
       console.log("getting workspace...")
-      workspace_filename = getParameterByName("workspace");
+      workspace_filename = window.parent.workspace_filename;
       console.log("getting workspace: " + workspace_filename)
       var xml = loadXMLDoc(workspace_filename);
       window.parent.xml = xml;
