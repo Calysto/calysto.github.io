@@ -436,13 +436,15 @@
 
       console.log("getting workspace...")
       workspace_filename = getParameterByName("workspace");
+      console.log("getting workspace: " + workspace_filename)
       var xml = loadXMLDoc(workspace_filename);
       window.parent.xml = xml;
 
-      if (xml != null) {
-          console.log("loading dom to workspace...")
-          Blockly.Xml.domToWorkspace(workspace, xml);
+      if (xml === null) {
+          xml = Blockly.Xml.textToDom('<xml id="workspace"><block type="procedures_defnoreturn" x="12" y="13"><field name="NAME">setup</field></block><block type="procedures_defnoreturn" x="13" y="113"><field name="NAME">draw</field></block></xml>');
       }
+      console.log("loading dom to workspace...")
+      Blockly.Xml.domToWorkspace(workspace, xml);
 
       function handle_output(out){
             var res = null;
