@@ -413,9 +413,12 @@
       window.parent.xml = document.getElementById("toolbox");
 
       function getParameterByName(name) {
+          console.log("getParameterByName: " + name);
           name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
           var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
                                  results = regex.exec(location.search);
+          console.log("location.search: " + location.search);
+          console.log(results);
           return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
       }
 
