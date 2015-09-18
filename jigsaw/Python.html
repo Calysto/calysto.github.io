@@ -396,6 +396,7 @@
 <div style="text-align: center">
     <button onclick="generate()">Run</button>
     <button onclick="generate(1)">Generate Python Code</button>
+    <button onclick="save_workspace()">Save</button>
 </div>
 </td>
 </tr>
@@ -411,15 +412,36 @@
       window.parent.Blockly = Blockly;
       window.parent.xml = document.getElementById("toolbox");
 
+      function getParameterByName(name) {
+          name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+          var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                                 results = regex.exec(location.search);
+          return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+      }
+
     var workspace = Blockly.inject('blocklyDiv',
         {media: 'https://calysto.github.io/javascripts/blockly/media/',
          toolbox: document.getElementById('toolbox'),
          zoom: {enabled: true}
         });
  
-        cell_index = window.parent.IPython.notebook.get_selected_index();
+      cell_index = window.parent.IPython.notebook.get_selected_index();
 
-        function handle_output(out){
+      function loadXMLDoc(filename) {
+          var xhttp = new XMLHttpRequest();
+          xhttp.open("GET", filename, false);
+          xhttp.send();
+          return xhttp.responseXML;
+      }
+
+      workspace_filename = getParameterByName("workspace");
+      var xml = loadXMLDoc(workspace_filename);
+
+      if (xml != null) {
+          Blockly.Xml.domToWorkspace(workspace, xml);
+      }
+
+      function handle_output(out){
             var res = null;
             var data = null;
             if (out.msg_type == "stream") {
@@ -499,12 +521,10 @@
       function save_workspace() {
           var xml = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
           xml.style = "display: none";
-          xml.id = "myworkspace1";
-          remove("myworkspace1");
-          window.parent.document.body.appendChild(xml);
+          xml.id = "workspace";
+          var xml_text = Blockly.Xml.domToText(xml)
+          window.parent.IPython.notebook.kernel.execute('%%file ' + workspace_filename + '\n' + xml_text);
       }
   </script>
-
-
 </body>
 </html>
