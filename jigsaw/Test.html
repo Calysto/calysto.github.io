@@ -409,9 +409,8 @@
 
   <script>
       // Make Blockly available to notebook:
-      if (window.parent.Blockly === undefined) {
-          window.parent.Blockly = Blockly;
-      }
+      window.parent.Blockly = Blockly;
+      window.parent.DOMParser = DOMParser;
 
       var workspace = Blockly.inject('blocklyDiv',
         {media: 'https://calysto.github.io/javascripts/blockly/media/',
