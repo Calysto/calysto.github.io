@@ -416,7 +416,8 @@
          zoom: {enabled: true}
         });
 
-      window.parent.document.jigsaw_register_workspace("MYWORKSPACENAME", workspace);
+      var xml_init = document.getElementById('workspace');
+      window.parent.document.jigsaw_register_workspace("MYWORKSPACENAME", workspace, xml_init);
   </script>
 </body>
 </html>
