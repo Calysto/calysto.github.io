@@ -966,104 +966,27 @@
 <tr>
 <td>
 <div style="text-align: center">
-    <button onclick="generate()">Generate Processing Code</button>
+    <button onclick="window.parent.document.jigsaw_generate('MYWORKSPACENAME')">Run</button>
+    <button onclick="window.parent.document.jigsaw_generate('MYWORKSPACENAME', 1)">Generate Processing Code</button>
+    <button onclick="window.parent.document.jigsaw_clear_output('MYWORKSPACENAME')">Clear Cell Output</button>
 </div>
 </td>
 </tr>
 </table>
 
   <script>
-      // Helps debugging:
+      // Make Blockly available to notebook:
       window.parent.Blockly = Blockly;
-      window.parent.xml = document.getElementById("toolbox");
+      window.parent.DOMParser = DOMParser;
 
-    var workspace = Blockly.inject('blocklyDiv',
+      var workspace = Blockly.inject('blocklyDiv',
         {media: 'https://calysto.github.io/javascripts/blockly/media/',
          toolbox: document.getElementById('toolbox'),
          zoom: {enabled: true}
         });
-      
-        Blockly.Xml.domToWorkspace(workspace, document.getElementById('workspace'));
-        cell_index = window.parent.IPython.notebook.get_selected_index();
 
-        function handle_output(out){
-            var res = null;
-            var data = null;
-            if (out.msg_type == "stream") {
-                res = out.content.text;
-                document.getElementById('code_output').value += res.toString();
-            } else if (out.msg_type === "pyout") {
-                // if output is a python object
-                res = out.content.data["text/plain"];
-                document.getElementById('code_output').value += res.toString(); 
-            } else if (out.msg_type == "pyerr") {
-                // if output is a python error
-                res = out.content.data["text/plain"];
-                document.getElementById('code_output').value += res.toString();
-            } else if (out.msg_type == "execute_result") {
-                var str = out.content.data["text/plain"];
-                res = str;
-                if (res.indexOf("u") == 0)
-                    res = res.substring(2, res.length - 1) + "\\n";
-                if (res) {
-                    document.getElementById('code_output').value += res.toString();
-                }
-            } else {
-                // if output is something we haven't thought of
-                res = out.toString();
-                document.getElementById('code_output').value += res.toString();
-            }
-        };
-      
-      function import_module(name, items) {
-          var modules = xml.getElementsByClassName("Modules")[0];
-          // for each item in items:
-          var block = document.createElement("block");
-          block.setAttribute("type", "text"); // block type
-          modules.appendChild(block);
-          // end for; update toolbox
-          Blockly.updateToolbox(xml);
-      }
-      
-      
-    function handle_output(out) {
-        console.log(out);
-        if (out.msg_type == "stream") {
-            res = out.content.text;
-            document.getElementById('code_output').value += res.toString();
-        }
-    };
-    
-    function generate() {
-      var callbacks = { 'iopub' : {'output' : handle_output}};
-      var code = Blockly.Java.workspaceToCode(workspace);
-      window.parent.IPython.notebook.select(cell_index);
-      var cell = window.parent.IPython.notebook.insert_cell_above();
-      cell.set_text(code);
-    }
-      function reset_workspace(reload) {
-          // reset
-          Blockly.mainWorkspace.clear()
-          // load workspace from xml
-          if (reload == 1) {
-              var xml = window.parent.document.getElementById("myworkspace1");
-              Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, xml);
-          }
-      }
-      function remove(id) {
-          var elem = window.parent.document.getElementById(id);
-          while (elem) {
-              elem.parentNode.removeChild(elem);
-              elem = window.parent.document.getElementById(id);
-          }
-      }
-      function save_workspace() {
-          var xml = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
-          xml.style = "display: none";
-          xml.id = "myworkspace1";
-          remove("myworkspace1");
-          window.parent.document.body.appendChild(xml);
-      }
+      var xml_init = document.getElementById('workspace');
+      window.parent.document.jigsaw_register_workspace("MYWORKSPACENAME", workspace, xml_init);
   </script>
 </body>
 </html>
