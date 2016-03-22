@@ -355,6 +355,115 @@
             this.setHelpUrl('http://processingjs.org/reference/nostroke_/');
           }
         };        
+	// Pixels:
+        Blockly.Blocks['processing_get_pixels'] = {
+          init: function() {
+            this.appendDummyInput()
+                .appendField("get_pixels   with:");
+            this.appendValueInput("picture")
+                .appendField("picture")
+            this.setInputsInline(true);
+            this.setPreviousStatement(true, null);
+            this.setNextStatement(true, null);
+            this.setColour(20);
+            this.setTooltip('Get the pixels from the given image');
+            this.setHelpUrl('http://processingjs.org/reference/pixels_/');
+          }
+        };        
+        Blockly.Blocks['processing_get_red'] = {
+          init: function() {
+            this.appendDummyInput()
+                .appendField("get red   with:");
+            this.appendValueInput("color")
+                .appendField("color")
+            this.setInputsInline(true);
+            this.setPreviousStatement(true, null);
+            this.setNextStatement(true, null);
+            this.setColour(20);
+            this.setTooltip('Set the outline color for the following shapes');
+            this.setHelpUrl('http://processingjs.org/reference/stroke_/');
+          }
+        };        
+        Blockly.Blocks['processing_get_green'] = {
+          init: function() {
+            this.appendDummyInput()
+                .appendField("get green   with:");
+            this.appendValueInput("color")
+                .appendField("color")
+            this.setInputsInline(true);
+            this.setPreviousStatement(true, null);
+            this.setNextStatement(true, null);
+            this.setColour(20);
+            this.setTooltip('Set the outline color for the following shapes');
+            this.setHelpUrl('http://processingjs.org/reference/stroke_/');
+          }
+        };        
+        Blockly.Blocks['processing_get_blue'] = {
+          init: function() {
+            this.appendDummyInput()
+                .appendField("get blue   with:");
+            this.appendValueInput("color")
+                .appendField("color")
+            this.setInputsInline(true);
+            this.setPreviousStatement(true, null);
+            this.setNextStatement(true, null);
+            this.setColour(20);
+            this.setTooltip('Set the outline color for the following shapes');
+            this.setHelpUrl('http://processingjs.org/reference/stroke_/');
+          }
+        };        
+        Blockly.Blocks['processing_set_red'] = {
+          init: function() {
+            this.appendDummyInput()
+                .appendField("set red   with:");
+            this.appendValueInput("color")
+                .appendField("color")
+            this.appendValueInput("red")
+                .appendField("red")
+                .setCheck("Number");
+            this.setInputsInline(true);
+            this.setPreviousStatement(true, null);
+            this.setNextStatement(true, null);
+            this.setColour(20);
+            this.setTooltip('Set the red color component for the color');
+            this.setHelpUrl('http://processingjs.org/reference/set_/');
+          }
+        };        
+        Blockly.Blocks['processing_set_green'] = {
+          init: function() {
+            this.appendDummyInput()
+                .appendField("set red   with:");
+            this.appendValueInput("color")
+                .appendField("color")
+            this.appendValueInput("red")
+                .appendField("red")
+                .setCheck("Number");
+            this.setInputsInline(true);
+            this.setPreviousStatement(true, null);
+            this.setNextStatement(true, null);
+            this.setColour(20);
+            this.setTooltip('Set the red color component for the color');
+            this.setHelpUrl('http://processingjs.org/reference/set_/');
+          }
+        };        
+        Blockly.Blocks['processing_set_blue'] = {
+          init: function() {
+            this.appendDummyInput()
+                .appendField("set blue   with:");
+            this.appendValueInput("color")
+                .appendField("color")
+            this.appendValueInput("red")
+                .appendField("red")
+                .setCheck("Number");
+            this.setInputsInline(true);
+            this.setPreviousStatement(true, null);
+            this.setNextStatement(true, null);
+            this.setColour(20);
+            this.setTooltip('Set the blue color component for the color');
+            this.setHelpUrl('http://processingjs.org/reference/set_/');
+          }
+        };        
+
         // Conversions:
         // Java:
         //arc()
@@ -486,6 +595,56 @@
           var code = 'random(' + value_high + ')';
           return [code, Blockly.Java.ORDER_ATOMIC];
         };
+
+	// pixels
+        Blockly.Java['processing_load_pixels'] = function(block) {
+          var value_high = Blockly.Java.valueToCode(block, 'high', Blockly.Java.ORDER_ATOMIC);
+          var code = 'random(' + value_high + ')';
+          return [code, Blockly.Java.ORDER_ATOMIC];
+        };
+        Blockly.Java['processing_update_pixels'] = function(block) {
+          var value_high = Blockly.Java.valueToCode(block, 'high', Blockly.Java.ORDER_ATOMIC);
+          var code = 'random(' + value_high + ')';
+          return [code, Blockly.Java.ORDER_ATOMIC];
+        };
+        Blockly.Java['processing_set_red'] = function(block) {
+          var value_high = Blockly.Java.valueToCode(block, 'high', Blockly.Java.ORDER_ATOMIC);
+          var code = 'random(' + value_high + ')';
+          return [code, Blockly.Java.ORDER_ATOMIC];
+        };
+        Blockly.Java['processing_set_green'] = function(block) {
+          var value_high = Blockly.Java.valueToCode(block, 'high', Blockly.Java.ORDER_ATOMIC);
+          var code = 'random(' + value_high + ')';
+          return [code, Blockly.Java.ORDER_ATOMIC];
+        };
+        Blockly.Java['processing_set_blue'] = function(block) {
+          var value_high = Blockly.Java.valueToCode(block, 'high', Blockly.Java.ORDER_ATOMIC);
+          var code = 'random(' + value_high + ')';
+          return [code, Blockly.Java.ORDER_ATOMIC];
+        };
+        Blockly.Java['processing_get_red'] = function(block) {
+          var value_high = Blockly.Java.valueToCode(block, 'high', Blockly.Java.ORDER_ATOMIC);
+          var code = 'random(' + value_high + ')';
+          return [code, Blockly.Java.ORDER_ATOMIC];
+        };
+        Blockly.Java['processing_get_green'] = function(block) {
+          var value_high = Blockly.Java.valueToCode(block, 'high', Blockly.Java.ORDER_ATOMIC);
+          var code = 'random(' + value_high + ')';
+          return [code, Blockly.Java.ORDER_ATOMIC];
+        };
+        Blockly.Java['processing_get_blue'] = function(block) {
+          var value_high = Blockly.Java.valueToCode(block, 'high', Blockly.Java.ORDER_ATOMIC);
+          var code = 'get(' + value_high + ')';
+          return [code, Blockly.Java.ORDER_ATOMIC];
+        };
+
+	// processing_blend(x,y,width,height,dx,dy,dwidth,dheight,MODE)
+        // processing_copy
+        // processing_filter
+        // processing_get
+        // processing_set
+        // processing_load_pixels
+        // processing_update_pixels
 
     </script>
 </head>
@@ -944,6 +1103,22 @@
 		</block>
             </category>
         </category>
+	<category name="Pixels">
+          <block type="processing_blend">
+	  </block>
+          <block type="processing_copy">
+	  </block>
+          <block type="processing_filter">
+	  </block>
+          <block type="processing_get">
+	  </block>
+          <block type="processing_load_pixels">
+	  </block>
+          <block type="processing_set">
+	  </block>
+          <block type="processing_update_pixels">
+	  </block>
+	</category>
     </category>
   </xml>
 
